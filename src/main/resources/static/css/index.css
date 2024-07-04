@@ -1,0 +1,72 @@
+/* 전체 페이지 스타일링 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    max-width: 800px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+/* 이미지와 번역 텍스트 레이아웃 설정 */
+.image-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#originalImage {
+    max-width: 45%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#translatedText {
+    width: 45%;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+/* 업로드 섹션 스타일 */
+.upload-section {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.trans'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+springBoot {
+    mainClass = 'com.trans.translateapp.TranslateAppApplication'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repo.spring.io/milestone"
+    }
+    maven {
+        url "https://repo.spring.io/snapshot"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'net.sourceforge.tess4j:tess4j:4.5.5'
+    implementation 'com.google.cloud:google-cloud-translate:1.94.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jar {
+    enabled = true
+}
