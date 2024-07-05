@@ -2,7 +2,9 @@ package com.trans.translateapp.util;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OCRUtil {
     public static String extractText(String imagePath) {
         Tesseract tesseract = new Tesseract();

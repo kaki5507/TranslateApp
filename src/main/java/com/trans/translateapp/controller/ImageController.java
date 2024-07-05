@@ -3,11 +3,17 @@ package com.trans.translateapp.controller;
 import com.trans.translateapp.service.TranslationService;
 import com.trans.translateapp.util.OCRUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,11 +29,17 @@ public class ImageController {
     @Autowired
     private TranslationService translationService;
 
+    @Autowired
+    private OCRUtil ocrUtil;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body("Please select an image.");
+                return ResponseEntity.badRequest().body("{\"error\": \"Please select an image.\"}");
             }
 
             // Generate a unique file name to avoid duplicates
@@ -49,7 +61,7 @@ public class ImageController {
 
             return ResponseEntity.ok().body("{\"imageUrl\": \"" + imageUrl + "\"}");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Failed to upload image.\"}");
         }
     }
 
@@ -62,14 +74,40 @@ public class ImageController {
                     .orElseThrow(() -> new IOException("No files found."));
 
             // Perform OCR on the image
-            String extractedText = OCRUtil.extractText(filePath.toString());
+            String extractedText = ocrUtil.extractText(filePath.toString());
             System.out.println("extractedText : " + extractedText);
+            System.out.println("filePath : " + filePath);
+
             // Translate the extracted text
             String translatedText = translationService.translateText(extractedText);
             System.out.println("translatedText : " + translatedText);
-            return ResponseEntity.ok().body("{\"translatedText\": \"" + translatedText + "\"}");
+
+            // Create JSON response
+            TranslationResponse response = new TranslationResponse(translatedText);
+            String jsonResponse = objectMapper.writeValueAsString(response);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            return new ResponseEntity<>(jsonResponse, headers, HttpStatus.OK);
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Failed to translate image.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"이미지 번역 실패\"}");
+        }
+    }
+
+    static class TranslationResponse {
+        private String translatedText;
+
+        public TranslationResponse(String translatedText) {
+            this.translatedText = translatedText;
+        }
+
+        public String getTranslatedText() {
+            return translatedText;
+        }
+
+        public void setTranslatedText(String translatedText) {
+            this.translatedText = translatedText;
         }
     }
 }
