@@ -29,27 +29,30 @@ h1 {
 
 /* 이미지와 번역 텍스트 레이아웃 설정 */
 .image-display {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
 }
-
-#originalImage {
-    max-width: 45%;
-    height: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#translatedText {
-    width: 45%;
+.image-display > div{
+    display: block;
+    width: 80%;
+    box-sizing: border-box;
+    margin: 10px auto;
     height: auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow-y: auto;
     background-color: #f8f9fa;
+    overflow-wrap: break-word; /* 줄바꿈 */
+}
+#originalImage {
+    max-width: 45%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* 업로드 섹션 스타일 */
