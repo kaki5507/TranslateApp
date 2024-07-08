@@ -75,12 +75,9 @@ public class ImageController {
 
             // Perform OCR on the image
             String extractedText = ocrUtil.extractText(filePath.toString());
-            System.out.println("extractedText : " + extractedText);
-            System.out.println("filePath : " + filePath);
 
             // Translate the extracted text
             String translatedText = translationService.translateText(extractedText);
-            System.out.println("translatedText : " + translatedText);
 
             // Create JSON response
             TranslationResponse response = new TranslationResponse(translatedText);

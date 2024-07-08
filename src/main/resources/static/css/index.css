@@ -70,3 +70,6 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* 번역 버튼 */
+.translateImage { background: green; }

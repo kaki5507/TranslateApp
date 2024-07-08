@@ -31,7 +31,6 @@ function translateImage() {
             return response.text(); // 먼저 텍스트로 받아서
         })
         .then(text => {
-            console.log('Response text:', text); // 응답 텍스트를 출력하여 확인
             try {
                 const data = JSON.parse(text); // 수동으로 JSON 파싱
                 console.log('Parsed data:', data);

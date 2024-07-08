@@ -7,16 +7,17 @@
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-<h1>Image Translation</h1>
+<h1>Image OCR</h1>
 <div class="container">
   <div class="upload-section">
     <input type="file" id="imageInput">
-    <button onclick="uploadImage()">Upload Image</button>
+    <button onclick="uploadImage()">upload Image</button>
+    <button class="translateImage" onclick="translateImage()">translate</button>
   </div>
+
   <div class="image-display">
     <div id="translatedText"></div>
   </div>
-  <button onclick="translateImage()">Translate</button>
 </div>
 
 <script src="/js/script.js"></script>
