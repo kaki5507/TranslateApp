@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.google.cloud:google-cloud-translate:1.94.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools' // html 바로 적용
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3' // Okhttp 사용
+    implementation 'org.apache.tika:tika-core:1.27' // 언어 감지
 }
 
 tasks.named('test') {

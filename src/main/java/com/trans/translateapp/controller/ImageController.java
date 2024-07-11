@@ -69,7 +69,7 @@ public class ImageController {
     }
 
     @GetMapping("/translate")
-    public ResponseEntity<?> translateImage() {
+    public ResponseEntity<?> translateImage(@RequestParam("targetLang") String targetLang) {
         try {
             Path filePath = Files.list(Paths.get(UPLOAD_DIR)) // 스트림으로 파일 목록 가져옴
                     .filter(Files::isRegularFile) // 디렉토리가 아닌 파일만 필터링
@@ -80,7 +80,7 @@ public class ImageController {
             String extractedText = ocrUtil.extractText(filePath.toString());
 
             // 추출된 텍스트 번역 + 확장성 고려 , 해당 service에서 다르게 번역 가능 ex) 일본어
-            String translatedText = translationService.translateText(extractedText);
+            String translatedText = translationService.translateText(extractedText , targetLang);
 
             // Create JSON response
             TranslationResponse response = new TranslationResponse(translatedText);

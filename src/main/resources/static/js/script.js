@@ -52,27 +52,42 @@ function uploadImage() {
         fetch를 세밀하게 다룰 수 있음
 *
 * */
-function translateImage() {
-    fetch('/translate') // 네트워크에 요청 보냄 서버로 부터 응답 받아옴 , 파라미터값으로는 url이랑 options 넣을 수 있음
-        .then(response => { // HTTP 응답의 모든 정보를 포함한다. response.ok는 상태 코드 200~299 범위 정상 받았음
-            console.log('Response status:', response.status); // HTTP 상태 코드
+/**
+ * 텍스트를 지정된 대상 언어로 번역하는 함수입니다.
+ * @param {string} targetLang - 대상 언어 코드 ('EN', 'KO', 'JA').
+ */
+function translateImage(targetLang) {
+    // 번역할 텍스트를 해당 언어에 맞는 요소에서 가져옵니다
+    const textToTranslate = document.getElementById('translatedText-EN').innerText.trim();
+
+    // 번역 API에 번역할 텍스트와 대상 언어를 포함한 fetch 요청을 보냅니다
+    fetch(`/translate?q=${textToTranslate}&targetLang=${targetLang}`)
+        .then(response => {
+            console.log('응답 상태:', response.status);
+            // HTTP 응답이 정상적이지 않은 경우 오류를 throw합니다
             if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText); // HTTP 상태 메시지 ★ 두번째 then으로 넘어감
+                throw new Error('네트워크 응답이 문제가 있습니다 ' + response.statusText);
             }
-            return response.text(); // 먼저 텍스트로 받아서
+            return response.json(); // JSON 형식으로 응답을 가져옵니다
         })
-        .then(text => { // 첫번째는 response를 받고 두번쨰에 text를 받음 메소드에서 변환된 텍스트 처리
-            try {
-                const data = JSON.parse(text); // JSON 데이터를 파싱하여 Javascript 객체로 변환
-                console.log('Parsed data:', data);
-                document.getElementById('translatedText').innerText = data.translatedText;
-            } catch (error) {
-                throw new Error('Error parsing JSON: ' + error.message);
+        .then(data => {
+            console.log('번역된 데이터:', data);
+            // 대상 언어에 따라 적절한 요소에 번역된 텍스트를 설정합니다
+            switch (targetLang) {
+                case 'en':
+                    document.getElementById('translatedText-EN').innerText = data.translatedText;
+                    break;
+                case 'ko':
+                    document.getElementById('translatedText-KR').innerText = data.translatedText;
+                    break;
+                case 'ja':
+                    document.getElementById('translatedText-JP').innerText = data.translatedText;
+                    break;
+                default:
+                    break;
             }
         })
         .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('fetch 작업 중 문제가 발생했습니다:', error);
         });
 }
-
-document.getElementById('translateButton').addEventListener('click', translateImage);

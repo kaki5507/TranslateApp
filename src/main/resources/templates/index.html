@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>번역기</title>
+  <title>img</title>
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-<h1>Image OCR</h1>
+<h1>Image</h1>
 <div class="container">
   <div class="upload-section">
     <input type="file" id="imageInput">
     <button onclick="uploadImage()">upload Image</button>
-    <button class="translateImage" onclick="translateImage()">translate</button>
+    <button class="translateImage" onclick="translateImage('en')">translate</button>
+    <button class="translateImage" onclick="translateImage('ko')">translate-KR</button>
+    <button class="translateImage" onclick="translateImage('ja')">translate-JP</button>
   </div>
 
   <div class="image-display">
-    <h2>1</h2>
-    <div id="translatedText"></div>
+    <h2>Translated Text (en)</h2>
+    <div id="translatedText-EN"></div>
   </div>
 
   <div class="image-display">
-    <h2>2</h2>
+    <h2>Translated Text (ko)</h2>
     <div id="translatedText-KR"></div>
   </div>
 
   <div class="image-display">
-    <h2>2</h2>
+    <h2>Translated Text (jp)</h2>
     <div id="translatedText-JP"></div>
   </div>
 </div>
