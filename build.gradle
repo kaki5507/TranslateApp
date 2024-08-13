@@ -29,6 +29,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'net.sourceforge.tess4j:tess4j:4.5.5'
@@ -37,6 +39,9 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools' // html 바로 적용
     implementation 'com.squareup.okhttp3:okhttp:4.9.3' // Okhttp 사용
     implementation 'org.apache.tika:tika-core:1.27' // 언어 감지
+    runtimeOnly 'org.postgresql:postgresql'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind' // Json 데이터 -> Java 변환
 }
 
 tasks.named('test') {
